@@ -1,17 +1,13 @@
 package com.jogosufabc.projeto;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
+import com.jogosufabc.projeto.screen.GameScreen;
 
-public class ProjetoFinal extends ApplicationAdapter {
+public class ProjetoFinal extends Game {
 
 	
 	@Override
     public void create() {
-
-    }
-
-    @Override
-    public void render() {
-
+		setScreen(new GameScreen());
     }
 }
