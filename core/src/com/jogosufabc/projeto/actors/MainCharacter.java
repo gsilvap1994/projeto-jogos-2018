@@ -1,19 +1,19 @@
 package com.jogosufabc.projeto.actors;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.jogosufabc.projeto.box2d.Main_CharacterUserData;
+import com.jogosufabc.projeto.box2d.MainCharacterUserData;
 
-public class Main_Character extends GameActor {
+public class MainCharacter extends GameActor {
 
 	private boolean jumping;
 
-    public Main_Character(Body body) {
+    public MainCharacter(Body body) {
         super(body);
     }
 
     @Override
-    public Main_CharacterUserData getUserData() {
-        return (Main_CharacterUserData) userData;
+    public MainCharacterUserData getUserData() {
+        return (MainCharacterUserData) userData;
     }
 
     public void jump() {

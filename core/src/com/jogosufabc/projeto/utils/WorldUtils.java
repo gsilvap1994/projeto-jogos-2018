@@ -5,6 +5,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.jogosufabc.projeto.box2d.GroundUserData;
+import com.jogosufabc.projeto.box2d.MainCharacterUserData;
 
 public class WorldUtils {
 	
@@ -20,6 +22,7 @@ public class WorldUtils {
 		bodyDef.position.set(new Vector2(Constants.GROUND_X, Constants.GROUND_Y));
         Body body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
+        body.setUserData(new GroundUserData());
         shape.setAsBox(Constants.GROUND_WIDTH / 2, Constants.GROUND_HEIGHT / 2);
         body.createFixture(shape, Constants.GROUND_DENSITY);
         shape.dispose();
@@ -35,8 +38,10 @@ public class WorldUtils {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(Constants.MAIN_CHARACTER_WIDTH / 2, Constants.MAIN_CHARACTER_HEIGHT / 2);
         Body body = world.createBody(bodyDef);
+        body.setGravityScale(Constants.MAIN_CHARACTER_GRAVITY_SCALE);
         body.createFixture(shape, Constants.MAIN_CHARACTER_DENSITY);
         body.resetMassData();
+        body.setUserData(new MainCharacterUserData());
         shape.dispose();
         return body;
 		
