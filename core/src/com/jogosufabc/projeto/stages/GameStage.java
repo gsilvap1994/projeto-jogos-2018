@@ -1,10 +1,11 @@
 package com.jogosufabc.projeto.stages;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.jogosufabc.projeto.actors.Ground;
+import com.jogosufabc.projeto.actors.Main_Character;
 import com.jogosufabc.projeto.utils.WorldUtils;
 
 public class GameStage extends Stage {
@@ -13,8 +14,8 @@ public class GameStage extends Stage {
     private static final int VIEWPORT_HEIGHT = 13;
     
     private World world;
-    private Body ground;
-    private Body main_character;
+    private Ground ground;
+    private Main_Character main_character;
     private final float TIME_STEP = 1 / 300f;
     private float accumulator = 0f;
 
@@ -23,14 +24,29 @@ public class GameStage extends Stage {
     
     
     public GameStage() {
-        world = WorldUtils.createWorld();
-        ground = WorldUtils.createGround(world);
-        main_character = WorldUtils.createCharacter(world);
+    	
+    	setUpWorld();
+        setUpCamera();
         renderer = new Box2DDebugRenderer();
-        setupCamera();
     }
     
-    private void setupCamera() {
+    private void setUpWorld() {
+        world = WorldUtils.createWorld();
+        setUpGround();
+        setUpMainChar();
+    }
+
+    private void setUpGround() {
+        ground = new Ground(WorldUtils.createGround(world));
+        addActor(ground);
+    }
+
+    private void setUpMainChar() {
+    	main_character = new Main_Character(WorldUtils.createCharacter(world));
+        addActor(main_character);
+    }
+    
+    private void setUpCamera() {
         camera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
         camera.update();

@@ -22,5 +22,7 @@ public class Constants {
     public static final float MAIN_CHARACTER_Y = GROUND_Y + GROUND_HEIGHT;
     public static final float MAIN_CHARACTER_WIDTH = 1f;
     public static final float MAIN_CHARACTER_HEIGHT = 2f;
+    public static final float MAIN_CHARACTER_GRAVITY_SCALE = 3f;
     public static float MAIN_CHARACTER_DENSITY = 0.5f;
+    public static final Vector2 MAIN_CHARACTER_JUMPING_LINEAR_IMPULSE = new Vector2(0, 13f);
 }
