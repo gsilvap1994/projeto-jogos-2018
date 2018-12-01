@@ -68,6 +68,7 @@ public class GameStage extends Stage implements ContactListener{
     
     private void setupTouchControlAreas() {
         touchPoint = new Vector3();
+        screenLeftSide = new Rectangle(0, 0, getCamera().viewportWidth / 2, getCamera().viewportHeight);
         screenRightSide = new Rectangle(getCamera().viewportWidth / 2, 0, getCamera().viewportWidth / 2,
                 getCamera().viewportHeight);
         Gdx.input.setInputProcessor(this);
@@ -103,6 +104,8 @@ public class GameStage extends Stage implements ContactListener{
 
         if (rightSideTouched(touchPoint.x, touchPoint.y)) {
             main_character.jump();
+        } else if (leftSideTouched(touchPoint.x, touchPoint.y)) {
+            main_character.dodge();
         }
 
         return super.touchDown(x, y, pointer, button);
@@ -110,6 +113,10 @@ public class GameStage extends Stage implements ContactListener{
     
     private boolean rightSideTouched(float x, float y) {
         return screenRightSide.contains(x, y);
+    }
+
+    private boolean leftSideTouched(float x, float y) {
+        return screenLeftSide.contains(x, y);
     }
 
     private void translateScreenToWorldCoordinates(int x, int y) {
