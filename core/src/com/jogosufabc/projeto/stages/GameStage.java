@@ -31,6 +31,7 @@ public class GameStage extends Stage implements ContactListener{
     private OrthographicCamera camera;
     private Box2DDebugRenderer renderer;
     
+    private Rectangle screenLeftSide;
     private Rectangle screenRightSide;
     private Vector3 touchPoint;
     

@@ -5,7 +5,9 @@ import com.jogosufabc.projeto.enums.UserDataType;
 import com.jogosufabc.projeto.utils.Constants;
 
 public class MainCharacterUserData extends UserData {
-
+	
+    private final Vector2 runningPosition = new Vector2(Constants.MAIN_CHARACTER_X, Constants.MAIN_CHARACTER_Y);
+    private final Vector2 dodgePosition = new Vector2(Constants.MAIN_CHARACTER_DODGE_X, Constants.MAIN_CHARACTER_DODGE_Y);
     private Vector2 jumpingLinearImpulse;
 
     public MainCharacterUserData() {
@@ -20,6 +22,19 @@ public class MainCharacterUserData extends UserData {
 
     public void setJumpingLinearImpulse(Vector2 jumpingLinearImpulse) {
         this.jumpingLinearImpulse = jumpingLinearImpulse;
+    }
+    
+    public float getDodgeAngle() {
+        
+        return (float) (-90f * (Math.PI / 180f));
+    }
+
+    public Vector2 getRunningPosition() {
+        return runningPosition;
+    }
+
+    public Vector2 getDodgePosition() {
+        return dodgePosition;
     }
 
 }
