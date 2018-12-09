@@ -19,7 +19,7 @@ public class MainCharacter extends GameActor {
 
     public void jump() {
 
-        if (!jumping) {
+        if (!(jumping || dodging)) {
             body.applyLinearImpulse(getUserData().getJumpingLinearImpulse(), body.getWorldCenter(), true);
             jumping = true;
         }
@@ -44,6 +44,19 @@ public class MainCharacter extends GameActor {
 
     public boolean isDodging() {
         return dodging;
+    }
+    
+    public void isDodging(boolean dodging) {
+    	this.dodging = dodging;
+    	if(!dodging) this.stopDodge();
+    }
+    
+    public boolean isJumping() {
+    	return this.jumping;
+    }
+    
+    public void isJumping(boolean jumping) {
+    	this.jumping = jumping;
     }
     
 }
