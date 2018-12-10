@@ -13,6 +13,8 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
+import com.jogosufabc.projeto.actors.Enemy;
 import com.jogosufabc.projeto.actors.Ground;
 import com.jogosufabc.projeto.actors.MainCharacter;
 import com.jogosufabc.projeto.utils.BodyUtils;
@@ -48,17 +50,25 @@ public class GameStage extends Stage implements ContactListener {
 		world = WorldUtils.createWorld();
 		world.setContactListener(this);
 		setUpGround();
-		setUpMainChar();
+		setUpMainCharacter();
+		setupEnemy();
 	}
+	
+	
 
 	private void setUpGround() {
 		ground = new Ground(WorldUtils.createGround(world));
 		addActor(ground);
 	}
 
-	private void setUpMainChar() {
+	private void setUpMainCharacter() {
 		main_character = new MainCharacter(WorldUtils.createCharacter(world));
 		addActor(main_character);
+	}
+	
+	private void setupEnemy() {
+		Enemy enemy = new Enemy(WorldUtils.createEnemy(world));
+		addActor(enemy);
 	}
 
 	private void setUpCamera() {
@@ -79,6 +89,13 @@ public class GameStage extends Stage implements ContactListener {
 	public void act(float delta) {
 		super.act(delta);
 
+		Array<Body> bodies = new Array<Body>(world.getBodyCount());
+        world.getBodies(bodies);
+
+        for (Body body : bodies) {
+            update(body);
+        }
+		
 		// Fixed timestep
 		accumulator += delta;
 
@@ -90,6 +107,15 @@ public class GameStage extends Stage implements ContactListener {
 		// TODO: Implement interpolation
 
 	}
+	
+	private void update(Body body) {
+        if (!BodyUtils.bodyInBounds(body)) {
+            if (BodyUtils.bodyIsEnemy(body) && !main_character.isHit()) {
+                setupEnemy();
+            }
+            world.destroyBody(body);
+        }
+    }
 
 	@Override
 	public void draw() {
@@ -115,7 +141,6 @@ public class GameStage extends Stage implements ContactListener {
 	@Override
 	public boolean keyDown(int keycode) {
 
-//    	translateScreenToWorldCoordinates(main_character.getOriginX(), main_character.getOriginY());
 		switch (keycode) {
 		case Input.Keys.UP:
 			main_character.jump();
@@ -157,8 +182,11 @@ public class GameStage extends Stage implements ContactListener {
 
 		Body a = contact.getFixtureA().getBody();
 		Body b = contact.getFixtureB().getBody();
-
-		if ((BodyUtils.bodyIsMainCharacter(a) && BodyUtils.bodyIsGround(b))
+		
+		if((BodyUtils.bodyIsMainCharacter(a) && BodyUtils.bodyIsEnemy(b)) ||
+				BodyUtils.bodyIsEnemy(a) && BodyUtils.bodyIsMainCharacter(b)) {
+			main_character.hit();
+		} else if ((BodyUtils.bodyIsMainCharacter(a) && BodyUtils.bodyIsGround(b))
 				|| (BodyUtils.bodyIsGround(a) && BodyUtils.bodyIsMainCharacter(b))) {
 			main_character.landed();
 		}

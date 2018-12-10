@@ -17,5 +17,25 @@ public class BodyUtils {
 
         return userData != null && userData.getUserDataType() == UserDataType.GROUND;
     }
+    
+    public static boolean bodyInBounds(Body body) {
+    	UserData userData = (UserData) body.getUserData();
+    	
+    	switch(userData.getUserDataType()) {
+	    	case MAIN_CHARACTER:
+	    	case ENEMY:
+	    		return body.getPosition().x + userData.getWidth() / 2 > 0;
+		default:
+			break;
+    	}
+    	
+    	return true;
+    }
+    
+    public static boolean bodyIsEnemy (Body body) {
+    	UserData userData = (UserData) body.getUserData();
+    	
+    	return userData != null && userData.getUserDataType() == UserDataType.ENEMY;
+    }
 
 }

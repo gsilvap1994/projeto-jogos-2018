@@ -7,6 +7,7 @@ public class MainCharacter extends GameActor {
 
 	private boolean jumping;
     private boolean dodging;
+    private boolean hit;
 
     public MainCharacter(Body body) {
         super(body);
@@ -52,11 +53,20 @@ public class MainCharacter extends GameActor {
     }
     
     public boolean isJumping() {
-    	return this.jumping;
+    	return jumping;
     }
     
     public void isJumping(boolean jumping) {
     	this.jumping = jumping;
+    }
+    
+    public void hit() {
+        body.applyAngularImpulse(getUserData().getHitAngularImpulse(), true);
+        hit = true;
+    }
+
+    public boolean isHit() {
+        return hit;
     }
     
 }
