@@ -24,13 +24,15 @@ public class ProjetoFinal extends Game {
 	public final static int APPLICATION = 2;
 	public final static int ENDGAME = 3;
 	
+	
+	
 	@Override
     public void create() {
 		loadingScreen = new LoadingScreen();
 		setScreen(loadingScreen);
     }
 	
-	public void render() {
+	public void render(float delta) {
 		currentScreen.render(Gdx.graphics.getDeltaTime());
 	}
 	
@@ -45,7 +47,7 @@ public class ProjetoFinal extends Game {
 				this.setScreen(optionsScreen);
 				break;
 			case APPLICATION:
-				if(gameScreen == null) gameScreen = new GameScreen("GAME");
+				if(gameScreen == null) gameScreen = new GameScreen("Game");
 				this.setScreen(gameScreen);
 				break;
 			case ENDGAME:
