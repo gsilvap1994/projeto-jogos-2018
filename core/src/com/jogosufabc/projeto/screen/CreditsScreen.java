@@ -1,4 +1,3 @@
-
 package com.jogosufabc.projeto.screen;
 
 import com.badlogic.gdx.Gdx;
@@ -12,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.jogosufabc.projeto.utils.Constants;
 
-public class GameScreen extends AbstractScreen {
+public class CreditsScreen extends AbstractScreen {
 	private Texture texture;
 	private SpriteBatch spriteBatch;
 	private Music music;
@@ -21,8 +20,8 @@ public class GameScreen extends AbstractScreen {
 	private FreeTypeFontParameter parameter;
 	private GlyphLayout glyphLayout_title;
 	private GlyphLayout glyphLayout_start;
-
-	public GameScreen(String id) {
+	
+	public CreditsScreen(String id) {
 		super(id);
 		spriteBatch = new SpriteBatch();
 		texture = new Texture(Gdx.files.internal("index.jpg"));
@@ -35,18 +34,18 @@ public class GameScreen extends AbstractScreen {
 		//setting up font;
 		generator = new FreeTypeFontGenerator(Gdx.files.internal("font/vegan-style.ttf"));
 		parameter = new FreeTypeFontParameter();
-		parameter.size = 50;
-		parameter.color = Color.BLACK;
+		parameter.size = 45;
+		parameter.color = Color.RED;
 		font = generator.generateFont(parameter);
 		glyphLayout_title = new GlyphLayout();
 		glyphLayout_start = new GlyphLayout();
-		glyphLayout_title.setText(font, "Good Game");
-		glyphLayout_start.setText(font, "Game");
+		glyphLayout_title.setText(font, "CREDITS!!!");
+		glyphLayout_start.setText(font, "Game Over");
 		
 		
 
 	}
-
+	
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
@@ -75,4 +74,3 @@ public class GameScreen extends AbstractScreen {
 	}
 
 }
-
