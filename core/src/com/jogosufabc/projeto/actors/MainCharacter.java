@@ -96,23 +96,27 @@ public class MainCharacter extends GameActor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
     	super.draw(batch, parentAlpha);
+    	float x = screenRectangle.x - (screenRectangle.width * 0.1f);
+        float y = screenRectangle.y;
+        float width = screenRectangle.width * 1.2f;
+        
     	stateTime += Gdx.graphics.getDeltaTime();
     	if (dodging) {
-            batch.draw(dodgingTexture, screenRectangle.x, screenRectangle.y + screenRectangle.height / 4, screenRectangle.width,
+            batch.draw(dodgingTexture, x, y + screenRectangle.height / 2, width,
                     screenRectangle.height * 3 / 4);
         } else if (hit) {
             // When he's hit we also want to apply rotation if the body has been rotated
-            batch.draw(hitTexture, screenRectangle.x, screenRectangle.y, screenRectangle.width * 0.5f,
-                    screenRectangle.height * 0.5f, screenRectangle.width, screenRectangle.height, 1f, 1f,
+            batch.draw(hitTexture, x, y, width * 0.5f,
+                    screenRectangle.height * 0.5f, width, screenRectangle.height, 1f, 1f,
                     (float) Math.toDegrees(body.getAngle()));
         } else if (jumping) {
-            batch.draw(jumpingTexture, screenRectangle.x, screenRectangle.y, screenRectangle.width,
+            batch.draw(jumpingTexture, x, y, width,
                     screenRectangle.height);
         } else {
             // Running
             stateTime += Gdx.graphics.getDeltaTime();
-            batch.draw((TextureRegion)runningAnimation.getKeyFrame(stateTime, true), screenRectangle.x, screenRectangle.y,
-                    screenRectangle.getWidth(), screenRectangle.getHeight());
+            batch.draw((TextureRegion)runningAnimation.getKeyFrame(stateTime, true), x, y,
+                    width, screenRectangle.height);
         }
     }
     
