@@ -34,13 +34,13 @@ public class GameScreen extends AbstractScreen {
 		//setting up font;
 		generator = new FreeTypeFontGenerator(Gdx.files.internal("font/vegan-style.ttf"));
 		parameter = new FreeTypeFontParameter();
-		parameter.size = 30;
+		parameter.size = 50;
 		parameter.color = Color.BLACK;
 		font = generator.generateFont(parameter);
 		glyphLayout_title = new GlyphLayout();
 		glyphLayout_start = new GlyphLayout();
-		glyphLayout_title.setText(font, "Fucking Good Game");
-		glyphLayout_start.setText(font, "Start Game");
+		glyphLayout_title.setText(font, "Good Game");
+		glyphLayout_start.setText(font, "Game");
 		
 		
 

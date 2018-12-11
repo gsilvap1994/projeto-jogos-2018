@@ -1,58 +1,101 @@
 package com.jogosufabc.projeto.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
-import com.jogosufabc.projeto.utils.Constants;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
+import com.jogosufabc.projeto.ProjetoFinal;
 
 public class OptionsScreen extends AbstractScreen {
-	private Texture texture;
-	private SpriteBatch spriteBatch;
-	private Music music;
-	private BitmapFont font;
-	private FreeTypeFontGenerator generator;
-	private FreeTypeFontParameter parameter;
-	private GlyphLayout glyphLayout_title;
-	private GlyphLayout glyphLayout_start;
+	
+	private ProjetoFinal parent;
+	private Stage stage;
+	private Label titleLabel; 
+	private Label volumeMusicLabel;
+	private Label volumeSoundLabel;
+	private Label musicOnOffLabel;
+	private Label soundOnOffLabel;
+	
+	
 	
 	public OptionsScreen(String id) {
 		super(id);
-		spriteBatch = new SpriteBatch();
-		texture = new Texture(Gdx.files.internal("index.jpg"));
 		
-		// opening music
-		music = Gdx.audio.newMusic(Gdx.files.internal("audio/opening.mp3"));
-		music.setLooping(true);
-		music.play();
-		
-		//setting up font;
-		generator = new FreeTypeFontGenerator(Gdx.files.internal("font/vegan-style.ttf"));
-		parameter = new FreeTypeFontParameter();
-		parameter.size = 30;
-		parameter.color = Color.BLACK;
-		font = generator.generateFont(parameter);
-		glyphLayout_title = new GlyphLayout();
-		glyphLayout_start = new GlyphLayout();
-		glyphLayout_title.setText(font, "Fucking Good Game");
-		glyphLayout_start.setText(font, "Start Game");
-		
-		
-
 	}
 	
 	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-		spriteBatch.dispose();
-		texture.dispose();
-		music.dispose();
-		font.dispose();
+	public void show() {
+
+		Table table = new Table();
+		table.setFillParent(true);
+        	table.setDebug(true);
+        	stage.addActor(table);
+
+        	Skin skin = new Skin(Gdx.files.internal("skin/neon-ui.json"));
+        
+        	//volume
+        	final Slider volumeMusicSlider = new Slider( 0f, 1f, 0.1f,false, skin );
+        	        volumeMusicSlider.setValue( parent.getPreferences().getMusicVolume() );
+        	        volumeMucisSlider.addListener( new EventListener() {
+        	  		@Override
+        			public boolean handle(Event event) {
+        	  			parent.getPreferences().setMusicVolume( volumeMusicSlider.getValue() );
+        	                return false;
+        		}
+        	});
+        	        //music
+        	        final CheckBox musicCheckbox = new CheckBox(null, skin);
+        	        musicCheckbox.setChecked( parent.getPreferences().isMusicEnabled() );
+        	        musicCheckbox.addListener( new EventListener() {
+        	           	@Override
+        	        	public boolean handle(Event event) {
+        	               	boolean enabled = musicCheckbox.isChecked();
+        	               	parent.getPreferences().setMusicEnabled( enabled );
+        	               	return false;
+        	        	}
+        	        });
+		
+		
+        	     // return to main screen button
+        	        final TextButton backButton = new TextButton("Back", skin, "small"); // the extra argument here "small" is used to set the button to the smaller version instead of the big default version
+        	        backButton.addListener(new ChangeListener() {
+        	        	@Override
+        	        	public void changed(ChangeEvent event, Actor actor) {
+        	        		parent.changeScreen(ProjetoFinal.MENU);
+        	        	}
+        	        });
+                	titleLabel = new Label( "Preferences", skin );
+                	volumeMusicLabel = new Label( null, skin );
+                	volumeSoundLabel = new Label( null, skin );
+                	musicOnOffLabel = new Label( null, skin );
+                	soundOnOffLabel = new Label( null, skin );
+                		
+                	table.add(titleLabel);
+                	table.row();
+                	table.add(volumeMusicLabel);
+                	table.add(volumeMusicSlider);
+                	table.row();
+                	table.add(musicOnOffLabel);
+                	table.add(musicCheckbox);
+                	table.row();
+                	table.add(volumeSoundLabel);
+                	table.add(soundMusicSlider);
+                	table.row();
+                	table.add(soundOnOffLabel);
+                	table.add(soundEffectsCheckbox);
+                	table.row();
+                	table.add(backButton);
+        		
+		
 	}
 
 	@Override
@@ -64,13 +107,7 @@ public class OptionsScreen extends AbstractScreen {
 	@Override
 	public void draw(float delta) {
 		// TODO Auto-generated method stub
-		spriteBatch.begin();
-		spriteBatch.draw(texture, 0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT, 0, 0, texture.getWidth(),
-				texture.getHeight(), false, false);
-		font.draw(spriteBatch, glyphLayout_title, Constants.GAME_WIDTH/2 - glyphLayout_title.width/2, Constants.GAME_HEIGHT - 50);
-		font.draw(spriteBatch, glyphLayout_start, Constants.GAME_WIDTH/2 - glyphLayout_start.width/2, 150);
-		spriteBatch.end();
 		
 	}
-
+	
 }

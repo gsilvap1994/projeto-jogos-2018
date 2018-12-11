@@ -5,19 +5,20 @@ import com.badlogic.gdx.Gdx;
 import com.jogosufabc.projeto.screen.AbstractScreen;
 import com.jogosufabc.projeto.screen.CreditsScreen;
 import com.jogosufabc.projeto.screen.GameScreen;
-import com.jogosufabc.projeto.screen.LoadingScreen;
 import com.jogosufabc.projeto.screen.OptionsScreen;
 import com.jogosufabc.projeto.screen.StartScreen;
+import com.jogosufabc.projeto.utils.Options;
 //import com.jogosufabc.projeto.screen.GameScreen;
 
 public class ProjetoFinal extends Game {
 	private AbstractScreen currentScreen;
 	
-	private LoadingScreen loadingScreen;
+
 	private OptionsScreen optionsScreen;
 	private StartScreen startScreen;
 	private GameScreen gameScreen;
 	private CreditsScreen creditsScreen;
+	private Options options; 
 
 	public final static int MENU = 0;
 	public final static int PREFERENCES = 1;
@@ -28,9 +29,13 @@ public class ProjetoFinal extends Game {
 	
 	@Override
     public void create() {
-		loadingScreen = new LoadingScreen();
-		setScreen(loadingScreen);
+		startScreen = new StartScreen("START");
+		setScreen(startScreen);
     }
+	
+	public Options getPreferences() {
+		return this.options;
+	}
 	
 	public void render(float delta) {
 		currentScreen.render(Gdx.graphics.getDeltaTime());
@@ -47,7 +52,7 @@ public class ProjetoFinal extends Game {
 				this.setScreen(optionsScreen);
 				break;
 			case APPLICATION:
-				if(gameScreen == null) gameScreen = new GameScreen("Game");
+				if(gameScreen == null) gameScreen = new GameScreen("GAME");
 				this.setScreen(gameScreen);
 				break;
 			case ENDGAME:
