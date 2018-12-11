@@ -2,6 +2,7 @@ package com.jogosufabc.projeto.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+//import com.jogosufabc.projeto.stages.GameStage;
 import com.jogosufabc.projeto.stages.GameStage;
 
 public class GameScreen extends AbstractScreen {
