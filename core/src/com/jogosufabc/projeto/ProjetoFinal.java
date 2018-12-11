@@ -21,7 +21,7 @@ public class ProjetoFinal extends Game {
 	private Options options; 
 
 	public final static int MENU = 0;
-	public final static int PREFERENCES = 1;
+	public final static int OPTIONS = 1;
 	public final static int APPLICATION = 2;
 	public final static int ENDGAME = 3;
 	
@@ -29,8 +29,11 @@ public class ProjetoFinal extends Game {
 	
 	@Override
     public void create() {
-		startScreen = new StartScreen("START");
-		setScreen(startScreen);
+//		startScreen = new StartScreen("START");
+//		setScreen(startScreen);
+		optionsScreen = new OptionsScreen("OPTIONS");
+		setScreen(optionsScreen);
+		
     }
 	
 	public Options getPreferences() {
@@ -47,7 +50,7 @@ public class ProjetoFinal extends Game {
 				if(startScreen == null) startScreen = new StartScreen("START");
 	                        this.setScreen(startScreen);
 				break;
-			case PREFERENCES:
+			case OPTIONS:
 				if(optionsScreen == null) optionsScreen = new OptionsScreen("OPTIONS");
 				this.setScreen(optionsScreen);
 				break;

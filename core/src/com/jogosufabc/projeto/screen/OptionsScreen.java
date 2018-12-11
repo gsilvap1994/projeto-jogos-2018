@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.jogosufabc.projeto.ProjetoFinal;
 
 public class OptionsScreen extends AbstractScreen {
@@ -45,34 +44,59 @@ public class OptionsScreen extends AbstractScreen {
         	//volume
         	final Slider volumeMusicSlider = new Slider( 0f, 1f, 0.1f,false, skin );
         	        volumeMusicSlider.setValue( parent.getPreferences().getMusicVolume() );
-        	        volumeMucisSlider.addListener( new EventListener() {
+        	        volumeMusicSlider.addListener( new EventListener() {
         	  		@Override
         			public boolean handle(Event event) {
         	  			parent.getPreferences().setMusicVolume( volumeMusicSlider.getValue() );
         	                return false;
         		}
         	});
-        	        //music
-        	        final CheckBox musicCheckbox = new CheckBox(null, skin);
-        	        musicCheckbox.setChecked( parent.getPreferences().isMusicEnabled() );
-        	        musicCheckbox.addListener( new EventListener() {
-        	           	@Override
-        	        	public boolean handle(Event event) {
-        	               	boolean enabled = musicCheckbox.isChecked();
-        	               	parent.getPreferences().setMusicEnabled( enabled );
-        	               	return false;
-        	        	}
-        	        });
+
+                	//volume
+                	final Slider soundMusicSlider = new Slider( 0f, 1f, 0.1f,false, skin );
+                	   soundMusicSlider.setValue( parent.getPreferences().getMusicVolume() );
+                	   soundMusicSlider.addListener( new EventListener() {
+                	  		@Override
+                			public boolean handle(Event event) {
+                	  			parent.getPreferences().setMusicVolume( soundMusicSlider.getValue() );
+                	                return false;
+                		}
+                	});
+        	        
+        	//music
+        	final CheckBox musicCheckbox = new CheckBox(null, skin);
+        	musicCheckbox.setChecked( parent.getPreferences().isMusicEnabled() );
+        	musicCheckbox.addListener( new EventListener() {
+        	    @Override
+        	    public boolean handle(Event event) {
+        	     boolean enabled = musicCheckbox.isChecked();
+        	     parent.getPreferences().setMusicEnabled( enabled );
+        	    return false;
+        	   }
+        	 });
+        	
+        	//effects
+        	final CheckBox soundEffectsCheckbox = new CheckBox(null, skin);
+        	soundEffectsCheckbox.setChecked( parent.getPreferences().isMusicEnabled() );
+        	soundEffectsCheckbox.addListener( new EventListener() {
+        	    @Override
+        	    public boolean handle(Event event) {
+        	     boolean enabled = soundEffectsCheckbox.isChecked();
+        	     parent.getPreferences().setMusicEnabled( enabled );
+        	    return false;
+        	   }
+        	 });
 		
 		
-        	     // return to main screen button
-        	        final TextButton backButton = new TextButton("Back", skin, "small"); // the extra argument here "small" is used to set the button to the smaller version instead of the big default version
-        	        backButton.addListener(new ChangeListener() {
-        	        	@Override
-        	        	public void changed(ChangeEvent event, Actor actor) {
-        	        		parent.changeScreen(ProjetoFinal.MENU);
-        	        	}
-        	        });
+        	 // Main Menu button
+        	  final TextButton backButton = new TextButton("Back", skin, "small");
+        	    backButton.addListener(new ChangeListener() {
+        	      @Override
+        	       public void changed(ChangeEvent event, Actor actor) {
+        	        	parent.changeScreen(ProjetoFinal.MENU);
+        	       }
+        	   });
+        	        
                 	titleLabel = new Label( "Preferences", skin );
                 	volumeMusicLabel = new Label( null, skin );
                 	volumeSoundLabel = new Label( null, skin );

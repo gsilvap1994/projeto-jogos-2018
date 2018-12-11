@@ -72,14 +72,14 @@ public class StartScreen extends AbstractScreen{
 		newGame.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				parent.changeScreen(ProjetoFinal.APPLICATION);			
+			   parent.changeScreen(ProjetoFinal.APPLICATION);		
 			}
 		});
 		
 		preferences.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				parent.changeScreen(ProjetoFinal.PREFERENCES);					
+				parent.changeScreen(ProjetoFinal.OPTIONS);					
 			}
 		});
 		
@@ -89,12 +89,10 @@ public class StartScreen extends AbstractScreen{
 	public void render(float delta) {
 		// clear the screen ready for next set of images to be drawn
 		spriteBatch.begin();
-		spriteBatch.draw(texture, 0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT, 0, 0, texture.getWidth(),
-				texture.getHeight(), false, false);
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		// tell our stage to do actions and draw itself
+		spriteBatch.draw(texture, 0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT, 0, 0, texture.getWidth(),
+				texture.getHeight(), false, false);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		stage.draw();
 		spriteBatch.end();
