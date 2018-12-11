@@ -1,0 +1,103 @@
+main_character.png
+size: 1960, 384
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dead_17_santa
+  rotate: false
+  xy: 0, 0
+  size: 280, 192
+  orig: 280, 192
+  offset: 0, 0
+  index: -1
+jump_11_santa
+  rotate: false
+  xy: 280, 0
+  size: 280, 192
+  orig: 280, 192
+  offset: 0, 0
+  index: -1
+run_1_santa
+  rotate: false
+  xy: 560, 0
+  size: 280, 192
+  orig: 280, 192
+  offset: 0, 0
+  index: -1
+run_2_santa
+  rotate: false
+  xy: 840, 0
+  size: 280, 192
+  orig: 280, 192
+  offset: 0, 0
+  index: -1
+run_3_santa
+  rotate: false
+  xy: 1120, 0
+  size: 280, 192
+  orig: 280, 192
+  offset: 0, 0
+  index: -1
+run_4_santa
+  rotate: false
+  xy: 1400, 0
+  size: 280, 192
+  orig: 280, 192
+  offset: 0, 0
+  index: -1
+run_5_santa
+  rotate: false
+  xy: 1680, 0
+  size: 280, 192
+  orig: 280, 192
+  offset: 0, 0
+  index: -1
+run_6_santa
+  rotate: false
+  xy: 0, 192
+  size: 280, 192
+  orig: 280, 192
+  offset: 0, 0
+  index: -1
+run_7_santa
+  rotate: false
+  xy: 280, 192
+  size: 280, 192
+  orig: 280, 192
+  offset: 0, 0
+  index: -1
+run_8_santa
+  rotate: false
+  xy: 560, 192
+  size: 280, 192
+  orig: 280, 192
+  offset: 0, 0
+  index: -1
+run_9_santa
+  rotate: false
+  xy: 840, 192
+  size: 280, 192
+  orig: 280, 192
+  offset: 0, 0
+  index: -1
+run_10_santa
+  rotate: false
+  xy: 1120, 192
+  size: 280, 192
+  orig: 280, 192
+  offset: 0, 0
+  index: -1
+run_11_santa
+  rotate: false
+  xy: 1400, 192
+  size: 280, 192
+  orig: 280, 192
+  offset: 0, 0
+  index: -1
+slide_8_santa
+  rotate: false
+  xy: 1680, 192
+  size: 280, 192
+  orig: 280, 192
+  offset: 0, 0
+  index: -1
