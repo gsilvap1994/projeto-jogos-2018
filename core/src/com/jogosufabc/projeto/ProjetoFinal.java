@@ -3,7 +3,7 @@ package com.jogosufabc.projeto;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.jogosufabc.projeto.screen.AbstractScreen;
-import com.jogosufabc.projeto.screen.CreditsScreen;
+import com.jogosufabc.projeto.screen.CreditScreen;
 import com.jogosufabc.projeto.screen.GameScreen;
 import com.jogosufabc.projeto.screen.OptionsScreen;
 import com.jogosufabc.projeto.screen.StartScreen;
@@ -16,11 +16,11 @@ public class ProjetoFinal extends Game {
 	private OptionsScreen optionsScreen;
 	private StartScreen startScreen;
 	private GameScreen gameScreen;
-	private CreditsScreen creditsScreen;
+	private CreditScreen creditScreen;
 	private Options options;
 
 	public final static int MENU = 0;
-	public final static int PREFERENCES = 1;
+	public final static int OPTIONS = 1;
 	public final static int APPLICATION = 2;
 	public final static int ENDGAME = 3;
 
@@ -45,7 +45,7 @@ public class ProjetoFinal extends Game {
 				startScreen = new StartScreen("START");
 			this.setScreen(startScreen);
 			break;
-		case PREFERENCES:
+		case OPTIONS:
 			if (optionsScreen == null)
 				optionsScreen = new OptionsScreen("OPTIONS");
 			this.setScreen(optionsScreen);
@@ -56,9 +56,9 @@ public class ProjetoFinal extends Game {
 			this.setScreen(gameScreen);
 			break;
 		case ENDGAME:
-			if (creditsScreen == null)
-				creditsScreen = new CreditsScreen("CREDITS");
-			this.setScreen(creditsScreen);
+			if (creditScreen == null)
+				creditScreen = new CreditScreen("CREDITS");
+			this.setScreen(creditScreen);
 			break;
 		}
 	}

@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.jogosufabc.projeto.utils.Constants;
-import com.badlogic.gdx.math.Matrix4;
 
 public class CreditScreen extends AbstractScreen {
 	private Texture texture;
@@ -20,7 +19,6 @@ public class CreditScreen extends AbstractScreen {
 	private FreeTypeFontGenerator generator;
 	private FreeTypeFontParameter parameter;
 	private GlyphLayout glyphLayout_title;
-	private GlyphLayout glyphLayout_start;
 	private GlyphLayout glyphLayout_nome1;
 	private GlyphLayout glyphLayout_nome2;
 	private GlyphLayout glyphLayout_nome3;
@@ -39,7 +37,7 @@ public class CreditScreen extends AbstractScreen {
 		parameter.color = Color.WHITE;
 		font = generator.generateFont(parameter);
 		glyphLayout_title = new GlyphLayout();
-		glyphLayout_start = new GlyphLayout();
+		new GlyphLayout();
 		glyphLayout_nome1 = new GlyphLayout();
 		glyphLayout_nome2 = new GlyphLayout();
 		glyphLayout_nome3 = new GlyphLayout();
