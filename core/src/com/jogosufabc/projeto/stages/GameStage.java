@@ -14,19 +14,25 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.jogosufabc.projeto.actors.Enemy;
 import com.jogosufabc.projeto.actors.Ground;
 import com.jogosufabc.projeto.actors.MainCharacter;
+import com.jogosufabc.projeto.actors.StageBackground;
 import com.jogosufabc.projeto.utils.BodyUtils;
+import com.jogosufabc.projeto.utils.Constants;
 import com.jogosufabc.projeto.utils.WorldUtils;
 
 public class GameStage extends Stage implements ContactListener {
-	// This will be our viewport measurements while working with the debug renderer
-	private static final int VIEWPORT_WIDTH = 10;
-	private static final int VIEWPORT_HEIGHT = 13;
+	
+	
+	private static final int VIEWPORT_WIDTH = Constants.GAME_WIDTH;
+	private static final int VIEWPORT_HEIGHT = Constants.GAME_HEIGHT;
 
 	private World world;
 	private Ground ground;
+	private StageBackground stageBackground;
 	private MainCharacter main_character;
 	private final float TIME_STEP = 1 / 300f;
 	private float accumulator = 0f;
@@ -39,7 +45,8 @@ public class GameStage extends Stage implements ContactListener {
 	private Vector3 touchPoint;
 
 	public GameStage() {
-
+		super(new ScalingViewport(Scaling.stretch, VIEWPORT_WIDTH, VIEWPORT_HEIGHT,
+				new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)));
 		setUpWorld();
 		setUpCamera();
 		setupTouchControlAreas();
@@ -49,11 +56,16 @@ public class GameStage extends Stage implements ContactListener {
 	private void setUpWorld() {
 		world = WorldUtils.createWorld();
 		world.setContactListener(this);
+		setupBackground();
 		setUpGround();
 		setUpMainCharacter();
 		setupEnemy();
 	}
 	
+	private void setupBackground() {
+		stageBackground = new StageBackground();
+		addActor(stageBackground);
+	}
 	
 
 	private void setUpGround() {
@@ -117,11 +129,7 @@ public class GameStage extends Stage implements ContactListener {
         }
     }
 
-	@Override
-	public void draw() {
-		super.draw();
-		renderer.render(world, camera.combined);
-	}
+	
 
 //    @Override
 //    public boolean touchDown(int x, int y, int pointer, int button) {
