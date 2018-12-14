@@ -8,7 +8,8 @@ public class AppPreferences {
 	private static final String PREF_MUSIC_ENABLED = "music.enabled";
 	private static final String PREF_SOUND_ENABLED = "sound.enabled";
 	private static final String PREF_SOUND_VOL = "sound";
-	private static final String PREFS_NAME = "b2dtut";
+	private static final String PREFS_NAME = "goodgame";
+	private static String username;
 
 	protected Preferences getPrefs() {
 		return Gdx.app.getPreferences(PREFS_NAME);
@@ -23,6 +24,15 @@ public class AppPreferences {
 		getPrefs().flush();
 
 		
+	}
+	
+	public void setUsername(String username) {
+		getPrefs().putString("username", username);
+		getPrefs().flush();
+	}
+	
+	public String getUsername() {
+		return getPrefs().getString("username");
 	}
 
 	public boolean isMusicEnabled() {
