@@ -1,7 +1,6 @@
 package com.jogosufabc.projeto.actors;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -9,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.jogosufabc.projeto.box2d.MainCharacterUserData;
 import com.jogosufabc.projeto.utils.Constants;
+import com.jogosufabc.projeto.utils.CustomSound;
 
 public class MainCharacter extends GameActor {
 
@@ -20,6 +20,9 @@ public class MainCharacter extends GameActor {
     private TextureRegion dodgingTexture;
     private TextureRegion hitTexture;
     private float stateTime;
+    
+    private CustomSound jumpSound;
+    private CustomSound hitSound;
 
     public MainCharacter(Body body) {
         super(body);
@@ -35,6 +38,9 @@ public class MainCharacter extends GameActor {
         jumpingTexture = textureAtlas.findRegion(Constants.MAIN_CHARACTER_JUMPING);
         dodgingTexture = textureAtlas.findRegion(Constants.MAIN_CHARACTER_DODGING);
         hitTexture = textureAtlas.findRegion(Constants.MAIN_CHARACTER_HITTING);
+        
+        jumpSound = new CustomSound("audio/jump.mp3");
+        hitSound = new CustomSound("audio/scream.mp3");
     }
 
     @Override
@@ -47,6 +53,7 @@ public class MainCharacter extends GameActor {
         if (!(jumping || dodging)) {
             body.applyLinearImpulse(getUserData().getJumpingLinearImpulse(), body.getWorldCenter(), true);
             jumping = true;
+            jumpSound.play();
         }
 
     }
@@ -86,6 +93,7 @@ public class MainCharacter extends GameActor {
     
     public void hit() {
         body.applyAngularImpulse(getUserData().getHitAngularImpulse(), true);
+        hitSound.play();
         hit = true;
     }
 

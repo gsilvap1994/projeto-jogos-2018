@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.jogosufabc.projeto.box2d.EnemyUserData;
 import com.jogosufabc.projeto.utils.Constants;
@@ -13,6 +14,8 @@ public class Enemy extends GameActor {
 	
 	private Animation animation;
     private float stateTime;
+    private boolean hasUpdated = false;
+    
     
 	public Enemy(Body body) {
 		super(body);
@@ -35,7 +38,13 @@ public class Enemy extends GameActor {
 	@Override
     public void act(float delta) {
         super.act(delta);
-        body.setLinearVelocity(getUserData().getLinearVelocity());
+        
+        
+        if(!hasUpdated && getUserData().getLinearVelocity().x > Constants.ENEMY_MAX_VELOCITY) {
+        	body.setLinearVelocity(getUserData().getLinearVelocity().sub(0.5f, 0));
+        	hasUpdated = true;
+        }
+        else body.setLinearVelocity(getUserData().getLinearVelocity());
     }
 	
 	@Override

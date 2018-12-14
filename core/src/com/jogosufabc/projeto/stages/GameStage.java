@@ -4,9 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -16,17 +14,19 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.jogosufabc.projeto.ProjetoFinal;
 import com.jogosufabc.projeto.actors.Enemy;
 import com.jogosufabc.projeto.actors.Ground;
 import com.jogosufabc.projeto.actors.MainCharacter;
+import com.jogosufabc.projeto.actors.Score;
 import com.jogosufabc.projeto.actors.StageBackground;
+import com.jogosufabc.projeto.screen.GameScreen;
 import com.jogosufabc.projeto.utils.BodyUtils;
 import com.jogosufabc.projeto.utils.Constants;
 import com.jogosufabc.projeto.utils.WorldUtils;
 
 public class GameStage extends Stage implements ContactListener {
-	
-	
+
 	private static final int VIEWPORT_WIDTH = Constants.GAME_WIDTH;
 	private static final int VIEWPORT_HEIGHT = Constants.GAME_HEIGHT;
 
@@ -36,21 +36,28 @@ public class GameStage extends Stage implements ContactListener {
 	private MainCharacter main_character;
 	private final float TIME_STEP = 1 / 300f;
 	private float accumulator = 0f;
+	private Enemy enemy;
+	private Score score;
+	private float time;
 
 	private OrthographicCamera camera;
-	private Box2DDebugRenderer renderer;
 
-	private Rectangle screenLeftSide;
-	private Rectangle screenRightSide;
-	private Vector3 touchPoint;
+//	private Rectangle screenLeftSide;
+//	private Rectangle screenRightSide;
+//	private Vector3 touchPoint;
 
-	public GameStage() {
+	private ProjetoFinal root;
+	private GameScreen parentScreen;
+
+	public GameStage(ProjetoFinal projetoFinal, GameScreen gameScreen) {
 		super(new ScalingViewport(Scaling.stretch, VIEWPORT_WIDTH, VIEWPORT_HEIGHT,
 				new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)));
+		root = projetoFinal;
+		parentScreen = gameScreen;
 		setUpWorld();
 		setUpCamera();
+		setUpScore();
 		setupTouchControlAreas();
-		renderer = new Box2DDebugRenderer();
 	}
 
 	private void setUpWorld() {
@@ -61,12 +68,11 @@ public class GameStage extends Stage implements ContactListener {
 		setUpMainCharacter();
 		setupEnemy();
 	}
-	
+
 	private void setupBackground() {
 		stageBackground = new StageBackground();
 		addActor(stageBackground);
 	}
-	
 
 	private void setUpGround() {
 		ground = new Ground(WorldUtils.createGround(world));
@@ -77,9 +83,9 @@ public class GameStage extends Stage implements ContactListener {
 		main_character = new MainCharacter(WorldUtils.createCharacter(world));
 		addActor(main_character);
 	}
-	
+
 	private void setupEnemy() {
-		Enemy enemy = new Enemy(WorldUtils.createEnemy(world));
+		enemy = new Enemy(WorldUtils.createEnemy(world));
 		addActor(enemy);
 	}
 
@@ -89,11 +95,16 @@ public class GameStage extends Stage implements ContactListener {
 		camera.update();
 	}
 
+	private void setUpScore() {
+		score = new Score();
+		addActor(score);
+	}
+
 	private void setupTouchControlAreas() {
-		touchPoint = new Vector3();
-		screenLeftSide = new Rectangle(0, 0, getCamera().viewportWidth / 2, getCamera().viewportHeight);
-		screenRightSide = new Rectangle(getCamera().viewportWidth / 2, 0, getCamera().viewportWidth / 2,
-				getCamera().viewportHeight);
+//		touchPoint = new Vector3();
+//		screenLeftSide = new Rectangle(0, 0, getCamera().viewportWidth / 2, getCamera().viewportHeight);
+//		screenRightSide = new Rectangle(getCamera().viewportWidth / 2, 0, getCamera().viewportWidth / 2,
+//				getCamera().viewportHeight);
 		Gdx.input.setInputProcessor(this);
 	}
 
@@ -102,34 +113,34 @@ public class GameStage extends Stage implements ContactListener {
 		super.act(delta);
 
 		Array<Body> bodies = new Array<Body>(world.getBodyCount());
-        world.getBodies(bodies);
+		world.getBodies(bodies);
 
-        for (Body body : bodies) {
-            update(body);
-        }
-		
+		for (Body body : bodies) {
+			update(body);
+		}
+
 		// Fixed timestep
 		accumulator += delta;
-
 		while (accumulator >= delta) {
 			world.step(TIME_STEP, 6, 2);
 			accumulator -= TIME_STEP;
+			System.out.println();
 		}
+		time += delta;
 
 		// TODO: Implement interpolation
 
 	}
-	
-	private void update(Body body) {
-        if (!BodyUtils.bodyInBounds(body)) {
-            if (BodyUtils.bodyIsEnemy(body) && !main_character.isHit()) {
-                setupEnemy();
-            }
-            world.destroyBody(body);
-        }
-    }
 
-	
+	private void update(Body body) {
+		if (!BodyUtils.bodyInBounds(body)) {
+			if (BodyUtils.bodyIsEnemy(body) && !main_character.isHit()) {
+				setupEnemy();
+			}
+			world.destroyBody(body);
+
+		}
+	}
 
 //    @Override
 //    public boolean touchDown(int x, int y, int pointer, int button) {
@@ -162,14 +173,14 @@ public class GameStage extends Stage implements ContactListener {
 
 	@Override
 	public boolean keyUp(int keyCode) {
-		switch(keyCode) {
+		switch (keyCode) {
 		case Input.Keys.UP:
 			break;
 		case Input.Keys.DOWN:
 			main_character.isDodging(false);
 			break;
 		}
-		
+
 		return true;
 	}
 
@@ -190,10 +201,12 @@ public class GameStage extends Stage implements ContactListener {
 
 		Body a = contact.getFixtureA().getBody();
 		Body b = contact.getFixtureB().getBody();
-		
-		if((BodyUtils.bodyIsMainCharacter(a) && BodyUtils.bodyIsEnemy(b)) ||
-				BodyUtils.bodyIsEnemy(a) && BodyUtils.bodyIsMainCharacter(b)) {
+
+		if ((BodyUtils.bodyIsMainCharacter(a) && BodyUtils.bodyIsEnemy(b))
+				|| BodyUtils.bodyIsEnemy(a) && BodyUtils.bodyIsMainCharacter(b)) {
 			main_character.hit();
+			root.changeScreen(ProjetoFinal.CREDITS);
+			parentScreen.stopMusic();
 		} else if ((BodyUtils.bodyIsMainCharacter(a) && BodyUtils.bodyIsGround(b))
 				|| (BodyUtils.bodyIsGround(a) && BodyUtils.bodyIsMainCharacter(b))) {
 			main_character.landed();
