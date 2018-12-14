@@ -44,7 +44,6 @@ public class CreditScreen extends Stage implements Screen {
 		parameter.color = Color.WHITE;
 		font = generator.generateFont(parameter);
 		glyphLayout_title = new GlyphLayout();
-		new GlyphLayout();
 		glyphLayout_nome1 = new GlyphLayout();
 		glyphLayout_nome2 = new GlyphLayout();
 		glyphLayout_nome3 = new GlyphLayout();

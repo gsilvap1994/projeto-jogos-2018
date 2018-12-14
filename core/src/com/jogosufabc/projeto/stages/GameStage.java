@@ -1,9 +1,10 @@
 package com.jogosufabc.projeto.stages;
 
+import java.util.concurrent.TimeUnit;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.jogosufabc.projeto.AppPreferences;
 import com.jogosufabc.projeto.ProjetoFinal;
 import com.jogosufabc.projeto.actors.Enemy;
 import com.jogosufabc.projeto.actors.Ground;
@@ -21,6 +23,7 @@ import com.jogosufabc.projeto.actors.MainCharacter;
 import com.jogosufabc.projeto.actors.Score;
 import com.jogosufabc.projeto.actors.StageBackground;
 import com.jogosufabc.projeto.screen.GameScreen;
+import com.jogosufabc.projeto.utils.Api;
 import com.jogosufabc.projeto.utils.BodyUtils;
 import com.jogosufabc.projeto.utils.Constants;
 import com.jogosufabc.projeto.utils.WorldUtils;
@@ -38,8 +41,7 @@ public class GameStage extends Stage implements ContactListener {
 	private float accumulator = 0f;
 	private Enemy enemy;
 	private Score score;
-	private float time;
-
+	private AppPreferences options;
 	private OrthographicCamera camera;
 
 //	private Rectangle screenLeftSide;
@@ -124,9 +126,7 @@ public class GameStage extends Stage implements ContactListener {
 		while (accumulator >= delta) {
 			world.step(TIME_STEP, 6, 2);
 			accumulator -= TIME_STEP;
-			System.out.println();
 		}
-		time += delta;
 
 		// TODO: Implement interpolation
 
@@ -204,9 +204,25 @@ public class GameStage extends Stage implements ContactListener {
 
 		if ((BodyUtils.bodyIsMainCharacter(a) && BodyUtils.bodyIsEnemy(b))
 				|| BodyUtils.bodyIsEnemy(a) && BodyUtils.bodyIsMainCharacter(b)) {
+			
 			main_character.hit();
-			root.changeScreen(ProjetoFinal.CREDITS);
-			parentScreen.stopMusic();
+			root.changeScreen(ProjetoFinal.LOADING);
+			options = new AppPreferences();
+			
+			enemy.getUserData().setLinearVelocity(Constants.ENEMY_LINEAR_VELOCITY);
+			String s = "{\"username\": " +"\"" + options.getUsername() + "\"";
+			s += ", \"score\": " + score.getScore() + "}";
+			try {
+				
+				Api.submitScore(s);
+				parentScreen.stopMusic();
+				
+				Thread.sleep(2000);
+				root.changeScreen(ProjetoFinal.LEADERBOARD);
+			} catch(Exception ex) {
+				ex.printStackTrace();
+			}
+			
 		} else if ((BodyUtils.bodyIsMainCharacter(a) && BodyUtils.bodyIsGround(b))
 				|| (BodyUtils.bodyIsGround(a) && BodyUtils.bodyIsMainCharacter(b))) {
 			main_character.landed();
