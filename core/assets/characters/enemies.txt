@@ -1,0 +1,96 @@
+enemies.png
+size: 119, 777
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+flying_1_cat
+  rotate: false
+  xy: 0, 0
+  size: 99, 58
+  orig: 99, 58
+  offset: 0, 0
+  index: -1
+flying_1_monster
+  rotate: false
+  xy: 0, 58
+  size: 105, 85
+  orig: 105, 85
+  offset: 0, 0
+  index: -1
+flying_2_cat
+  rotate: false
+  xy: 0, 143
+  size: 99, 58
+  orig: 99, 58
+  offset: 0, 0
+  index: -1
+flying_2_monster
+  rotate: false
+  xy: 0, 201
+  size: 105, 85
+  orig: 105, 85
+  offset: 0, 0
+  index: -1
+flying_3_monster
+  rotate: false
+  xy: 0, 286
+  size: 105, 85
+  orig: 105, 85
+  offset: 0, 0
+  index: -1
+lg_1_monster
+  rotate: false
+  xy: 0, 371
+  size: 54, 106
+  orig: 54, 106
+  offset: 0, 0
+  index: -1
+lg_2_monster
+  rotate: false
+  xy: 54, 371
+  size: 50, 106
+  orig: 50, 106
+  offset: 0, 0
+  index: -1
+md_1_monster
+  rotate: false
+  xy: 0, 477
+  size: 48, 94
+  orig: 48, 94
+  offset: 0, 0
+  index: -1
+md_2_monster
+  rotate: false
+  xy: 48, 477
+  size: 44, 94
+  orig: 44, 94
+  offset: 0, 0
+  index: -1
+sm_1_monster
+  rotate: false
+  xy: 0, 571
+  size: 43, 84
+  orig: 43, 84
+  offset: 0, 0
+  index: -1
+sm_2_monster
+  rotate: false
+  xy: 43, 571
+  size: 40, 85
+  orig: 40, 85
+  offset: 0, 0
+  index: -1
+xl_1_monster
+  rotate: false
+  xy: 0, 656
+  size: 62, 121
+  orig: 62, 121
+  offset: 0, 0
+  index: -1
+xl_2_monster
+  rotate: false
+  xy: 62, 656
+  size: 57, 121
+  orig: 57, 121
+  offset: 0, 0
+  index: -1
